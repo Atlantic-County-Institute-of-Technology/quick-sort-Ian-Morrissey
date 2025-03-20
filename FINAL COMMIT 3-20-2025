@@ -1,0 +1,76 @@
+// Ian Morrissey
+// Quick Sort
+// Uses partitions and pivots to sort a randomly generated array
+// 3/18/2025 - 3/20/2025
+
+import java.util.Random;
+
+public class Main {
+//Partitions and  sorts the subarrays. Uses recursion so fun
+    public static void quickSort(int[] arr, int low, int high) {
+        if (low < high) {
+            int pivotInd = partition(arr, low, high);
+        // Left & Right subarrays to be sorted
+            quickSort(arr, low, pivotInd - 1);
+            quickSort(arr, pivotInd + 1, high);
+        }
+    }
+//Rearranges using a pivot ex) sorts all values less than the pivot moved to left and higher to the right
+    public static int partition(int[] arr, int low, int high) {
+        int pivot = arr[high];
+
+        int i = low - 1;
+
+        for (int j = low; j < high; j++) {
+            if (arr[j] <= pivot) {
+                i++;
+                swap(arr, i, j);
+            }
+        }
+        swap(arr, i + 1, high);
+        return i + 1;
+    }
+//Swaps 2 specific numbers in the array i & j stuff
+    public static void swap(int[] arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+//Prints the array to the console so i get my A
+    public static void print(int[] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            System.out.print(arr[i] + " ");
+        }
+        System.out.println();
+    }
+// Generates random numbers for a set amount of numbers 1-100
+    public static int[] randArray(int size) {
+        Random rand = new Random();
+        int[] arr = new int[size];
+        for (int i = 0; i < size; i++) {
+            arr[i] = rand.nextInt(100);
+        }
+        return arr;
+    }
+    //Test array (used for 10 and 50 i just have to change the 10's to 50
+    public static void main(String[] args) {
+
+        int[] testArr = randArray(10);
+        System.out.println("Original array (10 items): ");
+        print(testArr);
+        quickSort(testArr, 0, testArr.length - 1);
+        System.out.println("Sorted array (10 items): ");
+        print(testArr);
+
+    // Array sorts nothing. It just says no though because it's useless
+        int[] emptyArr = new int[0];
+        System.out.println("No its empty");
+        print(emptyArr);
+        if (emptyArr.length > 1) {
+            quickSort(emptyArr, 0, emptyArr.length - 1);
+        }
+        System.out.println("No its empty");
+        print(emptyArr);
+    }
+}
+
